@@ -47,11 +47,11 @@ function convertLowerCaseAndSplit(path) {
                         return file + sentence + '\n';
                     }, "");
 
-                    // creating new file.
-                    fileSystem.writeFile('./lower-case-file.txt', lowerCaseData, (error) => {
-                        if (error) {
-                            reject("Not able to create new file Lower case file.");
-                        } else {
+                // creating new file.
+                fileSystem.writeFile('./lower-case-file.txt', lowerCaseData, (error) => {
+                    if (error) {
+                        reject("Not able to create new file Lower case file.");
+                    } else {
                         resolve(addFileName('./lower-case-file.txt'));
                     }
                 });
@@ -62,7 +62,7 @@ function convertLowerCaseAndSplit(path) {
 
 //  function to sort the conten inside the file.
 function sortFile(path) {
-    
+
     return new Promise((resolve, reject) => {
 
         // reading the previouds file by path.
@@ -71,9 +71,9 @@ function sortFile(path) {
                 reject("Not ble to read the Lower case file.");
             } else {
                 sortSentence = lowerCaseData.split('\n').sort()
-                .reduce((file, line) => {
-                    return file + line + "\n";
-                }, "");
+                    .reduce((file, line) => {
+                        return file + line + "\n";
+                    }, "");
 
                 //  create new file for it. 
                 fileSystem.writeFile('./sort-sentence-file.txt', sortSentence, (error) => {
@@ -94,20 +94,20 @@ function deleteFiles(path) {
     return new Promise((resolve, reject) => {
         // reading the previouds file by path.
         fileSystem.readFile(path, 'utf-8', (error, filesData) => {
-            if(error) {
+            if (error) {
                 reject("Cannot able to read the fileName.txt file.")
             } else {
                 filesData = filesData.split('\n')
-                .filter((lines) => {
-                    return lines !== "";
-                });
+                    .filter((lines) => {
+                        return lines !== "";
+                    });
 
                 //  deleting all file in fileName.txt
-                for(let fileName of filesData) {
+                for (let fileName of filesData) {
                     fileSystem.unlink(fileName, (error) => {
-                        if(error) {
+                        if (error) {
                             reject(`Cannot able to delete the file ${fileName.slice(2)}`);
-                        } 
+                        }
                     })
                 }
                 resolve("All files are deleted.");
@@ -131,4 +131,23 @@ function addFileName(path) {
     })
 }
 
-module.exports = { readFile, convertUpperCase, convertLowerCaseAndSplit, sortFile, deleteFiles };
+async function testResult() {
+    try {
+        let data = await readFile('./lipsum_1.txt');
+
+        let upperCasePath = await convertUpperCase(data);
+
+        let lowerCasePath = await convertLowerCaseAndSplit(upperCasePath);
+
+        await sortFile(lowerCasePath);
+
+        let result = await deleteFiles('./fileName.txt');
+        console.log(result);
+    }
+    catch (error) {
+        console.log(error);
+    }
+
+}
+
+module.exports = { testResult };
