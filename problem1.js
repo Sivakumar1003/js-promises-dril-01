@@ -27,7 +27,7 @@ function deleteFiles(fileCount) {
     return new Promise((resolve, reject) => {
         for (let index = 1; index <= fileCount; index++) {
             fileSystem.unlink(`./DemoFolder/file_${index}.json`, (error) => {
-                if(error) {
+                if (error) {
                     reject(`not able to delete file_${index}.json file.`)
                 }
             });
@@ -36,4 +36,24 @@ function deleteFiles(fileCount) {
     })
 }
 
-module.exports = { createFiles, deleteFiles };
+async function testResult() {
+
+    let fileCount = 4;
+    let data = {
+        'name': "sivakumar",
+        'age': 22
+    }
+
+    try {
+        let createResult = await createFiles(fileCount, data);
+        console.log(createResult);
+
+        let deleteResult = await deleteFiles(fileCount);
+        console.log(deleteResult);
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+module.exports = { testResult };
