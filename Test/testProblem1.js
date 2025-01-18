@@ -5,13 +5,23 @@
         2. Delete those files simultaneously 
 */
 
-const createAndDeleteFiles = require('../problem1');
+const {createFiles, deleteFiles} = require('../problem1');
 
-let fileCount = 5;
+let fileCount = 4;
 let data = {
     'name': "sivakumar", 
     'age': 22
 }
 
 // calling the function.
-createAndDeleteFiles(fileCount, data);
+createFiles(fileCount, data)
+.then((result) => {
+    console.log(result);
+    return deleteFiles(fileCount)
+})
+.then((deleteResult)=> {
+    console.log(deleteResult);
+})
+.catch((error) => {
+    console.log(error);
+})
