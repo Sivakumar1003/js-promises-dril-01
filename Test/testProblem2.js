@@ -25,9 +25,9 @@ readFile('./lipsum_1.txt')
     .then(() => {
         return deleteFiles('./fileName.txt');
     })
-    .then(() => {
-        console.log("file are deleted.")
+    .then((res) => {
+        console.log(res);
     })
-    .catch((err) => {
-        console.log(err)
+    .catch((error) => {
+        console.log(error)
     })
