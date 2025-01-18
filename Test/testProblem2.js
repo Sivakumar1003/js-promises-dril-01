@@ -9,25 +9,6 @@
         5. Read the contents of filenames.txt and delete all the new files that are mentioned in that list simultaneously.
 */
 
-const {readFile, convertUpperCase, convertLowerCaseAndSplit, sortFile, deleteFiles} = require('../problem2.js');
+const { testResult } = require('../problem2.js');
 
-//  calling all the function.
-readFile('./lipsum_1.txt')
-    .then((data) => {
-        return convertUpperCase(data);
-    })
-    .then((upperCasePath) => {
-        return convertLowerCaseAndSplit(upperCasePath);
-    })
-    .then((lowerCasePath) => {
-        return sortFile(lowerCasePath)
-    })
-    .then(() => {
-        return deleteFiles('./fileName.txt');
-    })
-    .then((res) => {
-        console.log(res);
-    })
-    .catch((error) => {
-        console.log(error)
-    })
+testResult();
